@@ -1,0 +1,24 @@
+Yaha pe api banegi.
+
+installation instruction:
+___________________________
+
+Assuming Python installed  
+
+Run all of the commands in this directory, again, in THIS directory: E-classroom-api
+
+1.  python-m venv venv
+2. .\venv\Scripts\Activate 
+3. pip install -r requirements.txt
+
+4. pip list --> confirm all of the packages are installed.
+5. place the .env file in this directory: E-classroom-api/ (Check it's in the same directory as manage.py, .gitignore)
+
+
+6. shut down laptop once orr close VS code and reopen that and again activate virtual env again
+: .\venv\Scripts\Activate 
+
+7. python manage.py makemigrations
+8. python manage.py migrate
+
+9. Check everything is working fine: python manage.py runserver

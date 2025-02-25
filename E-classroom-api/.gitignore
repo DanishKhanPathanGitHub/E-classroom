@@ -1,0 +1,17 @@
+# Ignore compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore environment settings
+.env
+*.env
+
+# Ignore virtual environment if present inside API directory
+venv/
+env/
+
+# Ignore migrations cache files (but NOT the migrations themselves)
+*/migrations/__pycache__/
+
+.env
