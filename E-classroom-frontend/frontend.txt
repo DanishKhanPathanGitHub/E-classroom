@@ -11,3 +11,10 @@ ham log .env file ko whatsapp pe share karege kyuki vo github pe push nai hoga.
 
 .txt me instruction clear likh dena how to setup the project. Aur edit karna sirf, delete kuch nai karna.
 
+
+SetUp:
+
+Install NodeJs 
+Go to directory
+run - npm install/npm i   //it will install all dependencies for this project
+then run - npm run dev    // it will run the project and start live server
