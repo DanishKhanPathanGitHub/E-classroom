@@ -17,4 +17,5 @@ SetUp:
 Install NodeJs 
 Go to directory
 run - npm install/npm i   //it will install all dependencies for this project
-then run - npm run dev    // it will run the project and start live server
+then run - npm run dev    // it will run the project and start live server 
+danish
