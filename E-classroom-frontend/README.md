@@ -66,18 +66,7 @@ To install the project, follow these steps:
   ```bash
   npm install
   ```
-4. Set up your environment variables. Create a `.env` file in the root directory and add the necessary configuration:
-  ```bash
-  REACT_APP_FIREBASE_API_KEY=your_firebase_a
-  REACT_APP_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-  REACT_APP_FIREBASE_PROJECT_ID=your_firebase_project_id
-  REACT_APP_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-  REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
-  REACT_APP_FIREBASE_APP_ID=your_firebase_app_id
-  REACT_APP_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
-  ```
 
-And repeat these steps until finished.
 
 
 ## 🤝 Contributing <a name = "contributing"></a>
