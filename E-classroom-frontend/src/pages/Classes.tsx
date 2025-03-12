@@ -3,8 +3,6 @@ import { useSelector } from 'react-redux';
 import { Plus, KeyRound, BookOpen } from 'lucide-react';
 import { RootState } from '../store/store';
 import { Class, ClassInput } from '../types/class';
-import { db } from '../lib/firebase';
-import { collection, addDoc, getDocs, updateDoc, doc, query, where } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 interface ClassesProps {
@@ -12,6 +10,7 @@ interface ClassesProps {
 }
 
 const Classes: React.FC<ClassesProps> = ({ onViewChange }) => {
+  console.log(onViewChange);//not usefull
   const user = useSelector((state: RootState) => state.auth.user);
   const [showJoinModal, setShowJoinModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -28,15 +27,15 @@ const Classes: React.FC<ClassesProps> = ({ onViewChange }) => {
   const fetchClasses = async () => {
     setLoading(true);
     try {
-      let q;
-      if (user?.role === 'teacher') {
-        q = query(collection(db, 'classes'), where('teacherId', '==', user.id));
-      } else {
-        q = query(collection(db, 'classes'), where('students', 'array-contains', user?.id));
-      }
-      const querySnapshot = await getDocs(q);
-      const classesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Class));
-      setClasses(classesData);
+      // Mock fetching classes based on user role
+      const fetchedClasses: Class[] = user?.role === 'teacher' ? [
+        { id: '1', name: 'Math 101', description: 'Basic Math', teacherId: user.id, students: [], code: 'ABC123', createdAt: new Date().toISOString() },
+        { id: '2', name: 'Science 101', description: 'Basic Science', teacherId: user.id, students: [], code: 'DEF456', createdAt: new Date().toISOString() },
+      ] : [
+        { id: '1', name: 'Math 101', description: 'Basic Math', teacherId: 'teacher-id', students: [user?.id ?? ''], code: 'ABC123', createdAt: new Date().toISOString() },
+        { id: '2', name: 'Science 101', description: 'Basic Science', teacherId: 'teacher-id', students: [user?.id ?? ''], code: 'DEF456', createdAt: new Date().toISOString() },
+      ];
+      setClasses(fetchedClasses);
     } catch (error) {
       setError('Failed to fetch classes');
     } finally {
@@ -47,17 +46,19 @@ const Classes: React.FC<ClassesProps> = ({ onViewChange }) => {
   const handleCreateClass = async () => {
     setLoading(true);
     try {
-      await addDoc(collection(db, 'classes'), {
+      // Mock creating a class
+      const newClassData: Class = {
+        id: (classes.length + 1).toString(),
         name: newClass.name,
         description: newClass.description,
-        teacherId: user?.id,
+        teacherId: user?.id!,
         students: [],
         code: Math.random().toString(36).substring(2, 8).toUpperCase(),
-        createdAt: new Date(),
-      });
+        createdAt: new Date().toISOString(),
+      };
+      setClasses([...classes, newClassData]);
       setShowCreateModal(false);
       setNewClass({ name: '', description: '' });
-      fetchClasses();
     } catch (error) {
       setError('Failed to create class');
     } finally {
@@ -68,19 +69,15 @@ const Classes: React.FC<ClassesProps> = ({ onViewChange }) => {
   const handleJoinClass = async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, 'classes'), where('code', '==', classCode));
-      const querySnapshot = await getDocs(q);
-      if (querySnapshot.empty) {
+      // Mock joining a class
+      const classToJoin = classes.find(cls => cls.code === classCode);
+      if (!classToJoin) {
         throw new Error('Class not found');
       }
-      const classDoc = querySnapshot.docs[0];
-      const classData = classDoc.data() as Class;
-      await updateDoc(doc(db, 'classes', classDoc.id), {
-        students: [...classData.students, user?.id],
-      });
+      classToJoin.students.push(user?.id!);
+      setClasses([...classes]);
       setShowJoinModal(false);
       setClassCode('');
-      fetchClasses();
     } catch (error) {
       setError('Failed to join class');
     } finally {

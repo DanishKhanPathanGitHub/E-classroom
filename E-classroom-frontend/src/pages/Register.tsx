@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import { auth, db } from '../lib/firebase';
 import { setUser } from '../store/slices/authSlice';
 import { GraduationCap } from 'lucide-react';
-import { doc, setDoc } from 'firebase/firestore';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -28,27 +25,26 @@ const Register: React.FC = () => {
     }
 
     try {
-      // First create the auth user
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      // Mock user creation
+      const userCredential = { user: { uid: 'user-id', email } }; // Mock userCredential
       const { user } = userCredential;
       
-      // Create the user document with the selected role
+      // Mock user data creation
       const userData = {
         email: user.email,
-        role: role, // Use the selected role
+        role: role,
         createdAt: new Date().toISOString()
       };
 
-      // Set the user document with the same ID as auth
-      await setDoc(doc(db, 'users', user.uid), userData);
+      console.log(userData);
 
-      // Update Redux state with the correct role
-      const token = await user.getIdToken();
+      // Mock setting user data in Redux
+      const token = 'mock-token'; // Mock token
       dispatch(setUser({
         user: {
           id: user.uid,
           email: user.email!,
-          role: role, // Use the selected role
+          role: role,
         },
         token: token,
       }));
@@ -56,22 +52,7 @@ const Register: React.FC = () => {
       navigate('/dashboard');
     } catch (err: any) {
       console.error('Registration error:', err);
-      switch (err.code) {
-        case 'auth/email-already-in-use':
-          setError('This email is already registered. Please sign in instead.');
-          break;
-        case 'auth/invalid-email':
-          setError('Please enter a valid email address');
-          break;
-        case 'auth/operation-not-allowed':
-          setError('Registration is currently disabled. Please try again later.');
-          break;
-        case 'auth/weak-password':
-          setError('Please choose a stronger password (at least 6 characters)');
-          break;
-        default:
-          setError('Failed to create account. Please try again.');
-      }
+      setError('Failed to create account. Please try again.');
     } finally {
       setLoading(false);
     }

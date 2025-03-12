@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
 import { store } from './store/store';
+
+
 import Layout from './components/Layout';
 import PrivateRoute from './components/PrivateRoute';
 import Landing from './pages/Landing';

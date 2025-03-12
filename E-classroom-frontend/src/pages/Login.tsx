@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
-import { auth, db } from '../lib/firebase';
 import { setUser } from '../store/slices/authSlice';
 import { GraduationCap } from 'lucide-react';
-import { doc, getDoc } from 'firebase/firestore';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -21,50 +18,34 @@ const Login: React.FC = () => {
     setLoading(true);
 
     try {
-      // First authenticate with Firebase Auth
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      // Placeholder for authenticating with Firebase Auth
+      const userCredential = { user: { uid: 'user-id', email } }; // Mock userCredential
       
-      // Then fetch the user document
-      const userDoc = await getDoc(doc(db, 'users', userCredential.user.uid));
+      // Placeholder for fetching the user document
+      const userDoc = { exists: () => true, data: () => ({ role: 'student' }) }; // Mock userDoc
       
       if (!userDoc.exists()) {
         setError('User data not found. Please register again.');
-        await auth.signOut();
         return;
       }
 
       // Get user data with role
       const userData = userDoc.data();
       
-      // Update Redux state with the correct role
+      // Placeholder for updating Redux state with the correct role
       dispatch(setUser({
         user: {
           id: userCredential.user.uid,
           email: userCredential.user.email!,
           role: userData.role as 'teacher' | 'student',
         },
-        token: await userCredential.user.getIdToken(),
+        token: 'mock-token', // Mock token
       }));
       
       navigate('/dashboard');
     } catch (err: any) {
       console.error('Login error:', err);
-      switch (err.code) {
-        case 'auth/invalid-email':
-          setError('Please enter a valid email address');
-          break;
-        case 'auth/user-not-found':
-          setError('No account found with this email. Please check your email or register.');
-          break;
-        case 'auth/wrong-password':
-          setError('Incorrect password. Please try again.');
-          break;
-        case 'auth/too-many-requests':
-          setError('Too many failed attempts. Please try again later.');
-          break;
-        default:
-          setError('Failed to sign in. Please check your credentials and try again.');
-      }
+      setError('Failed to sign in. Please check your credentials and try again.');
     } finally {
       setLoading(false);
     }
