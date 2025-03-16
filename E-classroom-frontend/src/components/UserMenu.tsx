@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, LogOut, Settings } from 'lucide-react';
-import { auth } from '../lib/firebase';
+
 import { logout } from '../store/slices/authSlice';
 import { RootState } from '../store/store';
 
