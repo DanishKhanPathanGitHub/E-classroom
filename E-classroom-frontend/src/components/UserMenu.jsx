@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, LogOut, Settings } from 'lucide-react';
-<<<<<<< HEAD:E-classroom-frontend/src/components/UserMenu.jsx
-=======
 
->>>>>>> 288c5fc2b730bb4ded83f1c04d2f9c70bdd32003:E-classroom-frontend/src/components/UserMenu.tsx
 import { logout } from '../store/slices/authSlice';
 
 const UserMenu = () => {
