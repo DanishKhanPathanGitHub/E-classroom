@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { Bell, User, Lock } from 'lucide-react';
 
-const Settings: React.FC = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
+const Settings = () => {
+  const user = useSelector((state) => state.auth.user);
   const [notifications, setNotifications] = useState({
     email: true,
     browser: true,

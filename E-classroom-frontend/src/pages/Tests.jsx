@@ -1,50 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { TestTube2, Plus } from 'lucide-react';
 
-interface Question {
-  id: string;
-  text: string;
-  options: string[];
-  correctOption: string;
-}
-
-interface Test {
-  id: string;
-  title: string;
-  description: string;
-  date: string;
-  questions: Question[];
-}
-
-const Tests: React.FC = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
-  const [tests, setTests] = useState<Test[]>([]);
+const Tests = () => {
+  const user = useSelector((state) => state.auth.user);
+  const [tests, setTests] = useState([]);
   const [showAddTestModal, setShowAddTestModal] = useState(false);
-  const [showTestDetails, setShowTestDetails] = useState<Test | null>(null);
-  const [newTest, setNewTest] = useState<Test>({
+  const [showTestDetails, setShowTestDetails] = useState(null);
+  const [newTest, setNewTest] = useState({
     id: '',
     title: '',
     description: '',
     date: '',
     questions: [],
   });
-  const [newQuestion, setNewQuestion] = useState<Question>({
+  const [newQuestion, setNewQuestion] = useState({
     id: '',
     text: '',
     options: ['', '', '', ''],
     correctOption: '',
   });
-  const [answers, setAnswers] = useState<{ [key: string]: string }>({});
-  const [score, setScore] = useState<number | null>(null);
-  const [submittedTests, setSubmittedTests] = useState<{ [key: string]: boolean }>({});
+  const [answers, setAnswers] = useState({});
+  const [score, setScore] = useState(null);
+  const [submittedTests, setSubmittedTests] = useState({});
 
   useEffect(() => {
     // Fetch tests from the database or API
     const fetchTests = async () => {
       // Replace with your data fetching logic
-      const fetchedTests: Test[] = [
+      const fetchedTests = [
         {
           id: '1',
           title: 'React Basics Test',
@@ -140,7 +124,7 @@ const Tests: React.FC = () => {
     setNewQuestion({ id: '', text: '', options: ['', '', '', ''], correctOption: '' });
   };
 
-  const handleOpenTest = (test: Test) => {
+  const handleOpenTest = (test) => {
     setShowTestDetails(test);
     setAnswers({});
     setScore(null);
@@ -150,7 +134,7 @@ const Tests: React.FC = () => {
     setShowTestDetails(null);
   };
 
-  const handleAnswerChange = (questionId: string, answer: string) => {
+  const handleAnswerChange = (questionId, answer) => {
     setAnswers({ ...answers, [questionId]: answer });
   };
 

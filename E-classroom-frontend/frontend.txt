@@ -18,4 +18,6 @@ Install NodeJs
 Go to directory
 run - npm install/npm i   //it will install all dependencies for this project
 then run - npm run dev    // it will run the project and start live server 
-danish
+
+
+removed unwanted things in auth and converted all .tsx files to .jsx

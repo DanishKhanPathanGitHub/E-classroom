@@ -1,26 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen } from 'lucide-react';
 
-interface Lecture {
-  id: string;
-  title: string;
-  description: string;
-  videoUrl: string;
-}
-
-interface LecturesProps {
-  classId: string;
-  // Add other props here if any
-}
-
-const Lectures: React.FC<LecturesProps> = ({ classId }) => {
-  const [lectures, setLectures] = useState<Lecture[]>([]);
+const Lectures = ({ classId }) => {
+  const [lectures, setLectures] = useState([]);
 
   useEffect(() => {
     // Fetch lectures from the database or API
     const fetchLectures = async () => {
       // Replace with your data fetching logic
-      const fetchedLectures: Lecture[] = [
+      const fetchedLectures = [
         {
           id: '1',
           title: 'Introduction to React',

@@ -1,38 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { FileText, Plus, Trash, Edit } from 'lucide-react';
 
-interface Assignment {
-  id: string;
-  title: string;
-  description: string;
-  dueDate: string;
-  completed?: boolean;
-}
-
-interface AssignmentsProps {
-  classId: string;
-}
-
-const Assignments: React.FC<AssignmentsProps> = ({ classId }) => {
-  const user = useSelector((state: RootState) => state.auth.user);
-  const [assignments, setAssignments] = useState<Assignment[]>([]);
+const Assignments = ({ classId }) => {
+  const user = useSelector((state) => state.auth.user);
+  const [assignments, setAssignments] = useState([]);
   const [showAddAssignmentModal, setShowAddAssignmentModal] = useState(false);
-  const [showAssignmentDetailsModal, setShowAssignmentDetailsModal] = useState<Assignment | null>(null);
-  const [newAssignment, setNewAssignment] = useState<Assignment>({
+  const [showAssignmentDetailsModal, setShowAssignmentDetailsModal] = useState(null);
+  const [newAssignment, setNewAssignment] = useState({
     id: '',
     title: '',
     description: '',
     dueDate: '',
   });
-  const [editingAssignment, setEditingAssignment] = useState<Assignment | null>(null);
+  const [editingAssignment, setEditingAssignment] = useState(null);
 
   useEffect(() => {
     // Fetch assignments from the database or API based on classId
     const fetchAssignments = async () => {
       // Replace with your data fetching logic
-      const fetchedAssignments: Assignment[] = [
+      const fetchedAssignments = [
         {
           id: '1',
           title: 'React Basics',
@@ -69,23 +56,23 @@ const Assignments: React.FC<AssignmentsProps> = ({ classId }) => {
     setNewAssignment({ id: '', title: '', description: '', dueDate: '' });
   };
 
-  const handleEditAssignment = (assignment: Assignment) => {
+  const handleEditAssignment = (assignment) => {
     setEditingAssignment(assignment);
     setNewAssignment(assignment);
     setShowAddAssignmentModal(true);
   };
 
-  const handleDeleteAssignment = (assignmentId: string) => {
+  const handleDeleteAssignment = (assignmentId) => {
     setAssignments(assignments.filter((assignment) => assignmentId !== assignment.id));
   };
 
-  const handleCompleteAssignment = (assignmentId: string) => {
+  const handleCompleteAssignment = (assignmentId) => {
     setAssignments(assignments.map((assignment) =>
       assignment.id === assignmentId ? { ...assignment, completed: true } : assignment
     ));
   };
 
-  const handleOpenAssignmentDetails = (assignment: Assignment) => {
+  const handleOpenAssignmentDetails = (assignment) => {
     setShowAssignmentDetailsModal(assignment);
   };
 

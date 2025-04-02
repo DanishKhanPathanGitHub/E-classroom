@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 // import Sidebar from '../components/Sidebar';
 
-const ClassDetails: React.FC = () => {
+const ClassDetails = () => {
   return (
     
       <div className="flex-1 p-4">

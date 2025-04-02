@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { GraduationCap, Users2, BookOpen, FileText, TestTube2, ArrowRight } from 'lucide-react';
 import Footer from '../components/Footer';
 
-const Landing: React.FC = () => {
+const Landing = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}

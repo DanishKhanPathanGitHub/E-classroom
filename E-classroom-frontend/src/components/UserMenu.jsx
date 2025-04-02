@@ -2,19 +2,17 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { User, LogOut, Settings } from 'lucide-react';
-import { auth } from '../lib/firebase';
 import { logout } from '../store/slices/authSlice';
-import { RootState } from '../store/store';
 
-const UserMenu: React.FC = () => {
+const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
 
-  const handleLogout = async () => {
+  const handleLogout = () => {
     try {
-      await auth.signOut();
+      // Simply dispatch logout action without Firebase
       dispatch(logout());
       navigate('/login');
     } catch (error) {

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Bell } from 'lucide-react';
 
-const Notifications: React.FC = () => {
+const Notifications = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState<{ id: number; title: string; message: string; time: string; read: boolean }[]>([]);
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     // Simulate fetching notifications from backend
     // In a real app, replace this with an API call
     const fetchNotifications = async () => {
       // Mock fetching notifications
-      const fetchedNotifications: { id: number; title: string; message: string; time: string; read: boolean }[] = [];
+      const fetchedNotifications = [];
       setNotifications(fetchedNotifications);
     };
 
@@ -27,7 +27,7 @@ const Notifications: React.FC = () => {
     setNotifications(prevNotifications => [loginNotification, ...prevNotifications]);
   }, []);
 
-  const handleNotificationClick = (id: number) => {
+  const handleNotificationClick = (id) => {
     setNotifications(notifications.map(notification =>
       notification.id === id ? { ...notification, read: true } : notification
     ));

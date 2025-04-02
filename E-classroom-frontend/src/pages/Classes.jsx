@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Plus, KeyRound, BookOpen } from 'lucide-react';
-import { RootState } from '../store/store';
-import { Class, ClassInput } from '../types/class';
 import { useNavigate } from 'react-router-dom';
 
-interface ClassesProps {
-  onViewChange: (newView: 'classes' | 'lectures' | 'assignments') => void;
-}
-
-const Classes: React.FC<ClassesProps> = ({ onViewChange }) => {
+const Classes = ({ onViewChange }) => {
   console.log(onViewChange);//not usefull
-  const user = useSelector((state: RootState) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
   const [showJoinModal, setShowJoinModal] = useState(false);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [classes, setClasses] = useState<Class[]>([]);
+  const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
   const [classCode, setClassCode] = useState('');
-  const [newClass, setNewClass] = useState<ClassInput>({
+  const [newClass, setNewClass] = useState({
     name: '',
     description: '',
   });
@@ -28,7 +22,7 @@ const Classes: React.FC<ClassesProps> = ({ onViewChange }) => {
     setLoading(true);
     try {
       // Mock fetching classes based on user role
-      const fetchedClasses: Class[] = user?.role === 'teacher' ? [
+      const fetchedClasses = user?.role === 'teacher' ? [
         { id: '1', name: 'Math 101', description: 'Basic Math', teacherId: user.id, students: [], code: 'ABC123', createdAt: new Date().toISOString() },
         { id: '2', name: 'Science 101', description: 'Basic Science', teacherId: user.id, students: [], code: 'DEF456', createdAt: new Date().toISOString() },
       ] : [
@@ -47,11 +41,11 @@ const Classes: React.FC<ClassesProps> = ({ onViewChange }) => {
     setLoading(true);
     try {
       // Mock creating a class
-      const newClassData: Class = {
+      const newClassData = {
         id: (classes.length + 1).toString(),
         name: newClass.name,
         description: newClass.description,
-        teacherId: user?.id!,
+        teacherId: user?.id,
         students: [],
         code: Math.random().toString(36).substring(2, 8).toUpperCase(),
         createdAt: new Date().toISOString(),
@@ -74,7 +68,7 @@ const Classes: React.FC<ClassesProps> = ({ onViewChange }) => {
       if (!classToJoin) {
         throw new Error('Class not found');
       }
-      classToJoin.students.push(user?.id!);
+      classToJoin.students.push(user?.id);
       setClasses([...classes]);
       setShowJoinModal(false);
       setClassCode('');

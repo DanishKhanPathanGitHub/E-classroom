@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Announcement: React.FC = () => {
+const Announcement = () => {
   return (
     <div className="container mx-auto px-4 sm:px-6 py-6 sm:py-8">
       <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Announcements</h1>

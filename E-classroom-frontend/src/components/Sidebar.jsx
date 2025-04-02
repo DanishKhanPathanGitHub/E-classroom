@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { BookOpen, FileText, Menu, X } from 'lucide-react';
 
-const Sidebar: React.FC = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
+const Sidebar = () => {
+  const user = useSelector((state) => state.auth.user);
   const [isOpen, setIsOpen] = useState(true);
-  const { classId } = useParams<{ classId: string }>();
+  const { classId } = useParams();
 
   if (!user) return null;
 

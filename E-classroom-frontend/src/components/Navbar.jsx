@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import { GraduationCap } from 'lucide-react';
 import Notifications from './Notifications';
 import UserMenu from './UserMenu';
 
-const Navbar: React.FC = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
+const Navbar = () => {
+  const user = useSelector((state) => state.auth.user);
 
   return (
     <nav className="bg-white border-b border-gray-200">

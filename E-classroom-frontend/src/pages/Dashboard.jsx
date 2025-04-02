@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../store/store';
 import Classes from './Classes';
 import Lectures from './Lectures';
 import Assignments from './Assignments';
 
-const Dashboard: React.FC = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
-  const [view, setView] = useState<'classes' | 'lectures' | 'assignments'>('classes');
-  const [selectedClassId, setSelectedClassId] = useState<string | null>(null);
+const Dashboard = () => {
+  const user = useSelector((state) => state.auth.user);
+  const [view, setView] = useState('classes');
+  const [selectedClassId, setSelectedClassId] = useState(null);
 
-  const handleViewChange = (newView: 'classes' | 'lectures' | 'assignments', classId?: string) => {
+  const handleViewChange = (newView, classId) => {
     setView(newView);
     if (classId) {
       setSelectedClassId(classId);

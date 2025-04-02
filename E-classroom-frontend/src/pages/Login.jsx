@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../store/slices/authSlice';
 import { GraduationCap } from 'lucide-react';
 
-const Login: React.FC = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -12,38 +12,39 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
-      // Placeholder for authenticating with Firebase Auth
-      const userCredential = { user: { uid: 'user-id', email } }; // Mock userCredential
-      
-      // Placeholder for fetching the user document
-      const userDoc = { exists: () => true, data: () => ({ role: 'student' }) }; // Mock userDoc
-      
-      if (!userDoc.exists()) {
-        setError('User data not found. Please register again.');
-        return;
+      // Simple login logic without Firebase
+      // In a real app, you would make an API call to your backend
+      if (email && password) {
+        // Simulate successful login with user data
+        const userData = {
+          id: 'user-' + Math.random().toString(36).substr(2, 9),
+          email: email,
+          role: 'student', // Default role
+        };
+        
+        const mockToken = 'mock-jwt-token-' + Math.random().toString(36).substr(2, 16);
+        
+        // Update Redux state
+        dispatch(setUser({
+          user: userData,
+          token: mockToken,
+        }));
+        
+        // Store in localStorage for persistence
+        localStorage.setItem('token', mockToken);
+        localStorage.setItem('user', JSON.stringify(userData));
+        
+        navigate('/dashboard');
+      } else {
+        setError('Please provide both email and password');
       }
-
-      // Get user data with role
-      const userData = userDoc.data();
-      
-      // Placeholder for updating Redux state with the correct role
-      dispatch(setUser({
-        user: {
-          id: userCredential.user.uid,
-          email: userCredential.user.email!,
-          role: userData.role as 'teacher' | 'student',
-        },
-        token: 'mock-token', // Mock token
-      }));
-      
-      navigate('/dashboard');
-    } catch (err: any) {
+    } catch (err) {
       console.error('Login error:', err);
       setError('Failed to sign in. Please check your credentials and try again.');
     } finally {
@@ -124,9 +125,11 @@ const Login: React.FC = () => {
               </button>
             </div>
           </form>
+          {/* You can remove this section if you don't want the Google login option */}
           <h3 className='flex justify-center mt-4'>Or</h3>
           <div className="mt-6">
             <button
+              onClick={() => setError('OAuth login is not implemented in this version')}
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
               Sign in with Google

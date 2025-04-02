@@ -4,16 +4,16 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../store/slices/authSlice';
 import { GraduationCap } from 'lucide-react';
 
-const Register: React.FC = () => {
+const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState<'teacher' | 'student'>('student');
+  const [role, setRole] = useState('student');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
@@ -43,14 +43,14 @@ const Register: React.FC = () => {
       dispatch(setUser({
         user: {
           id: user.uid,
-          email: user.email!,
+          email: user.email,
           role: role,
         },
         token: token,
       }));
 
       navigate('/dashboard');
-    } catch (err: any) {
+    } catch (err) {
       console.error('Registration error:', err);
       setError('Failed to create account. Please try again.');
     } finally {
@@ -130,7 +130,7 @@ const Register: React.FC = () => {
                 <select
                   id="role"
                   value={role}
-                  onChange={(e) => setRole(e.target.value as 'teacher' | 'student')}
+                  onChange={(e) => setRole(e.target.value)}
                   disabled={loading}
                   className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
                 >
