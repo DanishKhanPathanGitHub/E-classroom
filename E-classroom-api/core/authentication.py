@@ -39,7 +39,7 @@ class JWTAuthentication(BaseAuthentication):
         return 'Bearer'
 
 class JWTAuthenticationExtension(OpenApiAuthenticationExtension):
-    target_class = 'user.authentication.JWTAuthentication'  
+    target_class = 'core.authentication.JWTAuthentication'  
     name = 'JWTAuth'
 
     def get_security_definition(self, auto_schema):
